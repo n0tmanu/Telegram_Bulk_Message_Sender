@@ -162,13 +162,9 @@ def create_users_folder():
 if __name__ == '__main__':
     print(Fore.RED, """
     Check config.py For Settings. 
-    The Default Sleep Time Is 5 Seconds. 
+    The Default Sleep Time Is 5-10 Seconds. 
     Increase It If You have a Large Number Of Messages To Send""")
     print(Style.RESET_ALL)
 
     asyncio.get_event_loop().run_until_complete(main())
-
-
-
-
 
