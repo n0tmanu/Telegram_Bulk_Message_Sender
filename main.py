@@ -1,6 +1,6 @@
 import time
 from telethon.sync import TelegramClient
-from telethon.errors.rpcerrorlist import UserInvalidError
+from telethon.errors.rpcerrorlist import UserBotError
 import config
 import asyncio
 from telethon.tl.types import Channel
@@ -48,16 +48,15 @@ async def scrape_channels():
         print(Fore.BLUE, channels[channel_index].name, Fore.GREEN, "Selected")
         channel = channels[channel_index]
         participants = await client.get_participants(channel)
-
+        create_users_folder()
         with open(f"users/{channel.name}_users.csv", 'w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerow(['User ID', 'Username', 'First Name', 'Last Name'])
             for user in participants:
                 writer.writerow([user.id, user.username, user.first_name, user.last_name])
 
-        print(Fore.RED, f"Saved users to users/{channel.name}_users.csv")
-
         clear_terminal()
+        print(Fore.RED, f"Saved users to users/{channel.name}_users.csv")
 
         await main()
 
@@ -90,7 +89,7 @@ async def send_messages():
         clear_terminal()
 
         message = input("Please Enter a message to send : ")
-
+        create_users_folder()
         with open(f"users/{file}", "r", newline="", encoding="utf-8") as users:
             reader = csv.reader(users)
             next(reader)
@@ -103,8 +102,12 @@ async def send_messages():
                     print(Fore.YELLOW, f"Message sent to {user_id}")
                     time.sleep(config.sleep_time)
 
-                except UserInvalidError:
+                except UserBotError:
                     print(f"Error Sending the message to {user_id}. User Likely a bot")
+                    time.sleep(config.sleep_time)
+                except Exception as e:
+                    print(e)
+                    time.sleep(config.sleep_time)
 
             print(Fore.RED, "Finished Sending Messages")
 
@@ -138,6 +141,19 @@ def clear_terminal():
         _ = os.system('clear')
     elif os.name == 'nt':   # For Windows
         _ = os.system('cls')
+
+
+def create_users_folder():
+    folder_name = "users"
+
+    if not os.path.exists(folder_name):
+        try:
+            os.makedirs(folder_name)
+            print(f"Folder '{folder_name}' created successfully.")
+        except OSError as e:
+            print(f"Error creating folder '{folder_name}': {e}")
+    else:
+        print(f"Folder '{folder_name}' already exists.")
 
 
 if __name__ == '__main__':
