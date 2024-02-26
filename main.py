@@ -88,7 +88,8 @@ async def send_messages():
         print(Style.RESET_ALL)
         clear_terminal()
 
-        message = input("Please Enter a message to send : ")
+        message = config.message_to_send
+
         create_users_folder()
         with open(f"users/{file}", "r", newline="", encoding="utf-8") as users:
             reader = csv.reader(users)
