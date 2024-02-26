@@ -8,7 +8,7 @@ from colorama import Fore, Style
 import csv
 import os
 import sys
-
+import random
 client = TelegramClient(
     "silly_",
     api_id=config.TELEGRAM_API_ID,
@@ -17,6 +17,8 @@ client = TelegramClient(
 
 
 client.start()
+
+sleep_time = random.randint(config.min_sleep_time, config.max_sleep_time)
 
 
 async def get_channels():
@@ -101,14 +103,14 @@ async def send_messages():
                 try:
                     await client.send_message(int(user_id), message)
                     print(Fore.YELLOW, f"Message sent to {user_id}")
-                    time.sleep(config.sleep_time)
+                    time.sleep(sleep_time)
 
                 except UserBotError:
                     print(f"Error Sending the message to {user_id}. User Likely a bot")
-                    time.sleep(config.sleep_time)
+                    time.sleep(sleep_time)
                 except Exception as e:
                     print(e)
-                    time.sleep(config.sleep_time)
+                    time.sleep(sleep_time)
 
             print(Fore.RED, "Finished Sending Messages")
 
