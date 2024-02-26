@@ -1,4 +1,4 @@
-## Use This Script Responsibly. If You'll Use This To Spam And Get banned, It's On You.
+## Use This Script Responsibly. If You'll Use This To Spam And Get Banned, It's On You.
 
 ### What does it do?
 It basically has two functionalities
