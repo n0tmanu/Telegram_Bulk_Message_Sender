@@ -40,3 +40,4 @@ To make it more natural, the sleep time will be randomized every time.
 
 The default wait time is 5 - 10 seconds but the more you can wait, lesser the risk of getting your account banned
 
+
